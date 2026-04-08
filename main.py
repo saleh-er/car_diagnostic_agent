@@ -1,16 +1,20 @@
 from src.obd_mock import MockOBD
+from src.obd_real import RealOBD
 from src.agent import CarAgent
 import time
 
 def run_diagnostic():
     print("🚗 Initializing AI Car Diagnostic Agent...")
-    time.sleep(1)
     
-    # 1. Connect to "Car" (Simulator)
-    car = MockOBD()
-    print(f"📡 Status: {car.connection_status}")
+    # Try Real Connection first
+    car = RealOBD()
     
-    # 2. Get Fault Codes
+    if not car.is_connected():
+        print("📡 No car detected. Switching to SIMULATOR MODE.")
+        car = MockOBD()
+    else:
+        print("🏎️ Connected to REAL VEHICLE.")
+
     codes = car.get_trouble_codes()
     
     if not codes:
