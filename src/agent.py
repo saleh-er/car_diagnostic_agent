@@ -3,15 +3,22 @@ from anyio import Path
 from groq import Groq
 from dotenv import load_dotenv
 
-# Path safety: ensures it looks for .env in the root folder
-env_path = Path(__file__).resolve().parent.parent / '.env'
+# Get the directory where THIS file is (src)
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# Go up one level to the project root
+project_root = os.path.dirname(current_dir)
+# Path to the .env file
+env_path = os.path.join(project_root, '.env')
+
 load_dotenv(dotenv_path=env_path)
 class CarAgent:
     def __init__(self):
         api_key = os.getenv("GROQ_API_KEY")
         
         if not api_key:
-            raise ValueError("❌ ERROR: GROQ_API_KEY not found! Check your .env file.")
+            # Debug: Print the path we searched
+            print(f"Searched for .env at: {env_path}")
+            raise ValueError("❌ ERROR: GROQ_API_KEY not found!")
             
         self.client = Groq(api_key=api_key)
         self.model = "llama3-8b-8192"
