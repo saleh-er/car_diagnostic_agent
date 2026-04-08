@@ -1,10 +1,11 @@
 import os
+from anyio import Path
 from groq import Groq
 from dotenv import load_dotenv
 
 # Path safety: ensures it looks for .env in the root folder
-load_dotenv()
-
+env_path = Path(__file__).resolve().parent.parent / '.env'
+load_dotenv(dotenv_path=env_path)
 class CarAgent:
     def __init__(self):
         api_key = os.getenv("GROQ_API_KEY")
