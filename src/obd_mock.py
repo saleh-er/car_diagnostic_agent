@@ -1,3 +1,5 @@
+import time
+import random   
 class MockOBD:
     def __init__(self, scenario="lean_engine"):
         self.connection_status = "Connected to ECU (SIMULATED)"
@@ -15,10 +17,11 @@ class MockOBD:
         return scenarios.get(self.scenario, [])
 
     def get_live_data(self):
-        # Match sensor data to the scenario
-        data = {
-            "lean_engine": {"RPM": 2500, "Coolant_Temp": 92, "Fuel_Trim": "+25%"},
-            "overheating": {"RPM": 1200, "Coolant_Temp": 120, "Oil_Pressure": "Low"},
-            "healthy": {"RPM": 800, "Coolant_Temp": 85, "Speed": 0}
-        }
-        return data.get(self.scenario, data["healthy"])
+        
+        time.sleep(random.uniform(0.1, 0.3))
+        
+        # Add a bit of 'jitter' to the RPM so it's not a perfect number
+        base_rpm = 2500
+        jitter = random.randint(-50, 50)
+        
+        return {"RPM": base_rpm + jitter, "Temp": 92}
