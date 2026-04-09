@@ -11,10 +11,9 @@ def run_diagnostic():
     
     if not car.is_connected():
         print("📡 No car detected. Switching to SIMULATOR MODE.")
-        car = MockOBD()
+        car = MockOBD(scenario="misfire")  # You can change the scenario for testing
     else:
-        print("🏎️ Connected to REAL VEHICLE.")
-
+        print(f"📡 Mode: {car.connection_status} | Scenario: {car.scenario}")
     codes = car.get_trouble_codes()
     
     if not codes:
