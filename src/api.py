@@ -11,9 +11,13 @@ class DiagnosticRequest(BaseModel):
 
 @app.post("/diagnose")
 async def get_diagnosis(request: DiagnosticRequest):
-    # This is where the phone sends data to your Python server
-    result = agent.get_diagnosis(request.code, request.description)
-    return {"diagnosis": result}
+    try:
+        # Ensure the agent is called correctly
+        result = agent.get_diagnosis(request.code, request.description)
+        return {"diagnosis": result}
+    except Exception as e:
+        # This will show you the REAL error in the browser if it fails again
+        return {"error": str(e)}
 @app.get("/")
 async def root():
     return {"message": "🚗 Car Diagnostic AI API is Online"}
