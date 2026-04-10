@@ -8,21 +8,23 @@ load_dotenv(os.path.join(os.getcwd(), '.env')) # Force current working directory
 
 class CarAgent:
     def __init__(self):
-        # 1. Try environment variable
+        # 💡 DEBUG PRINT: Show exactly where we are looking
+        print(f"DEBUG: Current Working Directory: {os.getcwd()}")
+        print(f"DEBUG: Files in current directory: {os.listdir(os.getcwd())}")
+        
+        load_dotenv()
         api_key = os.getenv("GROQ_API_KEY")
         
-        # 2. If None, try to manually read the file as a fallback
         if not api_key:
-            try:
-                with open(".env", "r") as f:
-                    for line in f:
-                        if line.startswith("GROQ_API_KEY="):
-                            api_key = line.split("=")[1].strip()
-            except:
-                pass
+            # Try to find the file manually in the parent if not found
+            parent_env = os.path.join(os.path.dirname(os.getcwd()), ".env")
+            if os.path.exists(parent_env):
+                print(f"DEBUG: Found .env in parent folder, loading manually...")
+                load_dotenv(parent_env)
+                api_key = os.getenv("GROQ_API_KEY")
 
         if not api_key:
-            raise ValueError("❌ ERROR: GROQ_API_KEY not found! Please check your .env file.")
+            raise ValueError(f"❌ ERROR: GROQ_API_KEY not found! Looked in {os.getcwd()}")
             
         self.client = Groq(api_key=api_key)
         self.model = "llama3-8b-8192"
