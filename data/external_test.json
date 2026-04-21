@@ -1,0 +1,26 @@
+[
+    {
+        "brand": "BMW",
+        "code": "101F01",
+        "desc": "Air mass system, plausibility: calculated air volumes in intake system implausible",
+        "severity": "High"
+    },
+    {
+        "brand": "Toyota",
+        "code": "P0420",
+        "desc": "Catalyst System Efficiency Below Threshold (Bank 1)",
+        "severity": "Medium"
+    },
+    {
+        "brand": "Tesla",
+        "code": "BMS_u008",
+        "desc": "Acceleration is reduced - High voltage battery power limited",
+        "severity": "Critical"
+    },
+    {
+        "brand": "Generic",
+        "code": "P0300",
+        "desc": "Random or Multiple Cylinder Misfire Detected",
+        "severity": "High"
+    }
+]
