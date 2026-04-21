@@ -1,5 +1,8 @@
 import json
 from src.agent import CarAgent
+from dotenv import load_dotenv
+
+load_dotenv()  # Load environment variables from .env file
 
 def run_batch_test():
     print("🧪 Starting AI Agent Stress Test with External Data...\n")
